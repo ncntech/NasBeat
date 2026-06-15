@@ -1,0 +1,59 @@
+name: Feature Request
+description: Suggest an idea or improvement for NasBeat
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea to make NasBeat better? We'd love to hear it!
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the app does this relate to?
+      multiple: true
+      options:
+        - Playback
+        - Library / Music Sources
+        - UI / Design
+        - Downloads
+        - Playlists
+        - Search
+        - Settings
+        - Platform-specific (Android / Windows / Linux / macOS)
+        - Performance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What problem does this solve? What's the pain point today?
+      placeholder: "Currently I have to … which is annoying because …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would you like it to work?
+      placeholder: "It would be great if NasBeat could …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches you thought about?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, mockups, links to similar features in other apps, etc.

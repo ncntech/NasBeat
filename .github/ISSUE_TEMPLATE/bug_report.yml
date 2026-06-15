@@ -1,0 +1,77 @@
+name: Bug Report
+description: Something isn't working right
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform are you on?
+      multiple: true
+      options:
+        - Android
+        - Windows
+        - Linux
+        - macOS
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: NasBeat Version
+      description: "Find it in Settings → About (e.g. 1.0.0+42)"
+      placeholder: "1.0.0+42"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly and concisely.
+      placeholder: "When I tap … the app crashes / shows …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How do we trigger the bug?
+      value: |
+        1. Open NasBeat
+        2. Go to …
+        3. Tap / play …
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      placeholder: "I expected …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or screenshots
+      description: Attach crash logs, logcat output, or screenshots if available.
+      render: shell
+
+  - type: input
+    id: device
+    attributes:
+      label: Device / OS version
+      placeholder: "Samsung Galaxy S23, Android 14"
+    validations:
+      required: true

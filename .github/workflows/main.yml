@@ -1,6 +1,9 @@
 name: "Build & Release"
 
 on:
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       prerelease:
@@ -426,3 +429,38 @@ jobs:
           allowUpdates: true
           omitArtifactsDuringUpdate: true
           bodyFile: /tmp/release_notes.md
+
+
+  # ══════════════════════════════════════════════════════════════════
+  # JOB 5 — GOOGLE PLAY UPLOAD  (internal track, after all builds)
+  # Requires secret: PLAY_STORE_SERVICE_ACCOUNT (JSON key file content)
+  # ══════════════════════════════════════════════════════════════════
+  deploy-play-store:
+    name: "🛒 Google Play (internal track)"
+    runs-on: ubuntu-latest
+    needs: [build-windows-android, release-notes-bot]
+    if: secrets.PLAY_STORE_SERVICE_ACCOUNT != ''
+
+    steps:
+      - name: Download Android artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: Release-Windows-Android
+          path: artifacts/
+
+      - name: Find arm64-v8a APK
+        id: apk
+        run: |
+          APK=$(find artifacts/ -name "*arm64-v8a*.apk" | head -1)
+          echo "path=$APK" >> $GITHUB_OUTPUT
+          echo "Found APK: $APK"
+
+      - name: Upload to Google Play internal track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT }}
+          packageName: ls.bloomee.musicplayer
+          releaseFiles: ${{ steps.apk.outputs.path }}
+          track: internal
+          status: draft
+          releaseName: v${{ needs.build-windows-android.outputs.version }}+${{ github.run_number }}
