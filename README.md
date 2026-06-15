@@ -2,7 +2,7 @@
 
 <img src="./assets/docs/bloomeetunes_new_banner.png" alt="BloomeeTunes Banner" width="100%">
 
-# 🌸 Bloomee 
+# 🌸 NasMusic
 
 **A unified local and plugin-first streaming music player built with Flutter & Rust.**
 
