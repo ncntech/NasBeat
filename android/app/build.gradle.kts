@@ -72,7 +72,10 @@ android {
                 keyPassword = keystoreProperties["keyPassword"] as String?
                 storeFile = rootProject.file("bloomee.jks")
                 storePassword = keystoreProperties["storePassword"] as String?
-                println("   ✅ Release signing config created successfully")
+                // Java 17+ keytool creates PKCS12 by default. key.properties must declare
+                // storeType=PKCS12 (or JKS for legacy stores) to avoid "Tag number over 30".
+                storeType = (keystoreProperties["storeType"] as String?) ?: "PKCS12"
+                println("   ✅ Release signing config created (storeType=${storeType})")
             }
         } else {
             println("   ❌ key.properties not found - using debug signing")

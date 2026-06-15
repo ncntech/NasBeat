@@ -58,15 +58,29 @@ jobs:
           echo "version=$ver" >> $env:GITHUB_OUTPUT
 
       - name: Decode Android keystore
+        shell: powershell
         run: |
-          $bytes = [Convert]::FromBase64String("${{ secrets.KEY_STORE }}")
+          # Strip ALL whitespace (newlines, spaces, carriage returns) before decoding.
+          # GitHub secrets encoded without -w 0 contain newlines every 76 chars which
+          # corrupt the binary and cause "Tag number over 30 is not supported".
+          $b64 = "${{ secrets.KEY_STORE }}" -replace '[^A-Za-z0-9+/=]', ''
+          $bytes = [Convert]::FromBase64String($b64)
           [IO.File]::WriteAllBytes("./android/bloomee.jks", $bytes)
+          $sz = (Get-Item "./android/bloomee.jks").Length
+          Write-Host "✅ Keystore written: $sz bytes"
+          if ($sz -lt 200) { Write-Error "Keystore too small — KEY_STORE secret may be corrupt or empty"; exit 1 }
 
       - name: Write key.properties
+        shell: powershell
         run: |
-          echo keyPassword=${{ secrets.KEY_PASSWORD }}   > ./android/key.properties
-          echo storePassword=${{ secrets.STORE_PASSWORD }} >> ./android/key.properties
-          echo keyAlias=${{ secrets.KEY_ALIAS }}          >> ./android/key.properties
+          # storeType must match how the keystore was created.
+          # Java 17+ keytool defaults to PKCS12. Set STORE_TYPE secret to "JKS" if yours is legacy.
+          $storeType = if ("${{ secrets.STORE_TYPE }}" -ne "") { "${{ secrets.STORE_TYPE }}" } else { "PKCS12" }
+          "keyPassword=${{ secrets.KEY_PASSWORD }}"     | Out-File -FilePath ./android/key.properties -Encoding utf8
+          "storePassword=${{ secrets.STORE_PASSWORD }}" | Out-File -FilePath ./android/key.properties -Encoding utf8 -Append
+          "keyAlias=${{ secrets.KEY_ALIAS }}"           | Out-File -FilePath ./android/key.properties -Encoding utf8 -Append
+          "storeType=$storeType"                         | Out-File -FilePath ./android/key.properties -Encoding utf8 -Append
+          Write-Host "✅ key.properties written (storeType=$storeType)"
 
       - name: Build Android APKs (split-per-abi)
         run: flutter build apk --release --split-per-abi --build-number ${{ github.run_number }}
