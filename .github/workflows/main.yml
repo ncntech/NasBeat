@@ -439,16 +439,26 @@ jobs:
     name: "🛒 Google Play (internal track)"
     runs-on: ubuntu-latest
     needs: [build-windows-android, release-notes-bot]
-    if: secrets.PLAY_STORE_SERVICE_ACCOUNT != ''
+    env:
+      HAS_PLAY_SECRET: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT != '' }}
 
     steps:
+      - name: Check Play Store secret
+        if: env.HAS_PLAY_SECRET != 'true'
+        run: |
+          echo "⚠️  PLAY_STORE_SERVICE_ACCOUNT secret not set — skipping Google Play upload."
+          echo "    Add the secret to enable automatic Play Store deployment."
+          exit 0
+
       - name: Download Android artifacts
+        if: env.HAS_PLAY_SECRET == 'true'
         uses: actions/download-artifact@v4
         with:
           name: Release-Windows-Android
           path: artifacts/
 
       - name: Find arm64-v8a APK
+        if: env.HAS_PLAY_SECRET == 'true'
         id: apk
         run: |
           APK=$(find artifacts/ -name "*arm64-v8a*.apk" | head -1)
@@ -456,6 +466,7 @@ jobs:
           echo "Found APK: $APK"
 
       - name: Upload to Google Play internal track
+        if: env.HAS_PLAY_SECRET == 'true'
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT }}
