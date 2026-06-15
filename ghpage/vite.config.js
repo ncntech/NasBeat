@@ -6,7 +6,7 @@ const dev = process.env.NODE_ENV === 'development';
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
-	base: dev ? '/' : '/BloomeeTunes/',
+	base: dev ? '/' : '/NasBeat/',
 	build: {
 		outDir: 'build',
 	},

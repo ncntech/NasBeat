@@ -1,11 +1,11 @@
 {
-    "name": "bloomee",
-    "short_name": "bloomee",
+    "name": "NasBeat",
+    "short_name": "NasBeat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "NasBeat — Multi-source and open music app for free.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
