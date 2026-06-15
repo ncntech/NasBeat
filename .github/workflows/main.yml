@@ -21,11 +21,11 @@ env:
 jobs:
 
   # ══════════════════════════════════════════════════════════════════
-  # JOB 1 — WINDOWS & ANDROID  (windows-latest)
+  # JOB 1 — WINDOWS & ANDROID  (windows-2022)
   # ══════════════════════════════════════════════════════════════════
   build-windows-android:
     name: "🪟 Windows & 🤖 Android"
-    runs-on: windows-latest
+    runs-on: windows-2022
     outputs:
       version: ${{ steps.version.outputs.version }}
 
