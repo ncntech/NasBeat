@@ -103,7 +103,7 @@ jobs:
                   build/app/outputs/flutter-apk/nasbeat_android_v${{ env.VERSION }}+${{github.run_number}}_x86_64.apk
                   build-number.txt
                 tag: v${{ env.VERSION }}+${{github.run_number}}
-                token: ${{secrets.SECRET_KEY}}
+                token: ${{ github.token }}
                 prerelease: true
                 allowUpdates: true 
 
@@ -152,7 +152,7 @@ jobs:
               with:
                 artifacts: nasbeat_linux_x64_v${{ env.VERSION }}+${{github.run_number}}.tar.gz
                 tag: v${{ env.VERSION }}+${{github.run_number}}
-                token: ${{secrets.SECRET_KEY}}
+                token: ${{ github.token }}
                 prerelease: true
                 allowUpdates: true 
                 omitBodyDuringUpdate: true
