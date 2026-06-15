@@ -1,0 +1,1 @@
+- [NasBeat CI fixes](nasbeat-ci-fixes.md) — windows-latest→windows-2022 fix + job-level secret guard pattern for GitHub Actions
