@@ -169,8 +169,8 @@
                 </section>
 
                 <section id="section-1" class="content-section {active === 1 ? 'active' : ''}" aria-hidden={active !== 1}>
-                        <h2>SourceForge Awards</h2>
-                        <p class="section-subtitle">Proudly recognized by the SourceForge community — achieved out of 500,000+ open source projects.</p>
+                        <h2>Why NasBeat?</h2>
+                        <p class="section-subtitle">Open source, privacy-first, and built for music lovers everywhere.</p>
                         <AwardsGrid />
                 </section>
 

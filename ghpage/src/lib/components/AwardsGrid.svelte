@@ -1,56 +1,43 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 
-	const projectUrl = 'https://github.com/nastech-ai/NasBeat';
-	const sfId = '3775631';
+	const projectUrl = 'https://github.com/ncntech/NasBeat';
 
-	const badges = [
-		{ badge: 'oss-open-source-excellence-black', metadata: 'achievement=oss-open-source-excellence' },
-		{ badge: 'oss-community-leader-black', metadata: 'achievement=oss-community-leader' },
-		{ badge: 'oss-users-love-us-black' },
-		{ badge: 'oss-community-choice-black', metadata: 'achievement=oss-community-choice' },
-		{ badge: 'oss-rising-star-black', metadata: 'achievement=oss-rising-star' },
-		{ badge: 'oss-sf-favorite-black', metadata: 'achievement=oss-sf-favorite' },
+	const achievements = [
+		{ icon: 'fa-solid fa-star', label: 'Open Source', sub: 'Free forever' },
+		{ icon: 'fa-solid fa-shield-halved', label: 'Privacy First', sub: 'No tracking' },
+		{ icon: 'fa-solid fa-bolt', label: 'Rust-Powered', sub: 'Native performance' },
+		{ icon: 'fa-solid fa-puzzle-piece', label: 'Plugin System', sub: 'Extensible by design' },
+		{ icon: 'fa-solid fa-globe', label: 'Cross-Platform', sub: 'Android, Windows, Linux, macOS' },
+		{ icon: 'fa-solid fa-music', label: 'Multi-Source', sub: 'All your music in one place' },
 	];
 
-	let carousel;
 	let rotation = 0;
 	let autoRotateInterval;
-	
-	const numItems = badges.length;
+
+	const numItems = achievements.length;
 	const rotationAngle = 360 / numItems;
 
-	// --- Multi-Tier Responsive Properties ---
 	let innerWidth = 0;
 	let cardWidth = 190;
 	let carouselRadius = 288;
-	
+
 	$: {
-		// Three tiers of responsiveness for better adaptability
-		if (innerWidth > 992) { 		// Large Desktop
+		if (innerWidth > 992) {
 			cardWidth = 210;
-		} else if (innerWidth > 600) {  // Tablet / Small Desktop
+		} else if (innerWidth > 600) {
 			cardWidth = 190;
-		} else { 						// Mobile
+		} else {
 			cardWidth = 150;
 		}
-		
-		// Recalculate radius automatically based on the chosen card width
 		const angle = Math.PI / numItems;
-		const gapFactor = 1.35; // Fine-tuned for good spacing at all sizes
+		const gapFactor = 1.35;
 		carouselRadius = (cardWidth / 2) * gapFactor / Math.tan(angle);
 	}
 
-	$: currentBadgeIndex = (Math.round((-rotation % 360) / rotationAngle) + numItems) % numItems;
+	$: currentIndex = (Math.round((-rotation % 360) / rotationAngle) + numItems) % numItems;
 
 	onMount(() => {
-		const src = `https://b.sf-syn.com/badge_js?sf_id=${sfId}`;
-		const sc = document.createElement('script');
-		sc.async = true;
-		sc.src = src;
-		const p = document.getElementsByTagName('script')[0] || document.body.firstChild;
-		p?.parentNode?.insertBefore(sc, p);
-
 		autoRotateInterval = setInterval(() => {
 			rotation -= rotationAngle;
 		}, 3000);
@@ -63,33 +50,27 @@
 
 <svelte:window bind:innerWidth />
 
-<!-- This wrapper is now more robust at containing the animation -->
-<div 
-	class="awards-wrapper" 
-	aria-label="SourceForge awards carousel"
+<div
+	class="awards-wrapper"
+	aria-label="NasBeat achievements carousel"
 	style="--radius: {carouselRadius}px; --card-width: {cardWidth}px;"
 >
 	<div class="awards-container">
-		<div 
-			class="carousel" 
-			bind:this={carousel} 
+		<div
+			class="carousel"
 			style="transform: translateZ(calc(var(--radius) * -1)) rotateY({rotation}deg);"
 		>
-			{#each badges as b, i}
-				<div 
+			{#each achievements as item, i}
+				<div
 					class="carousel-item"
-					class:active={i === currentBadgeIndex}
+					class:active={i === currentIndex}
 					style="transform: rotateY({i * rotationAngle}deg) translateZ(var(--radius));"
 				>
-					<div
-						class="sf-root"
-						data-id={sfId}
-						data-badge={b.badge}
-						data-metadata={b.metadata}
-						style="width: 130px;"
-					>
-						<a href={projectUrl} target="_blank" rel="noopener noreferrer">NasBeat</a>
-					</div>
+					<a href={projectUrl} target="_blank" rel="noopener noreferrer" class="achievement-card">
+						<i class="{item.icon} achievement-icon"></i>
+						<span class="achievement-label">{item.label}</span>
+						<span class="achievement-sub">{item.sub}</span>
+					</a>
 				</div>
 			{/each}
 		</div>
@@ -99,26 +80,20 @@
 <style>
 	.awards-wrapper {
 		width: 100%;
-		/* Set a max-width for very large screens to keep it elegant */
-		max-width: 500px; 
-		/* reduce vertical margin so stacked sections are closer on mobile */
+		max-width: 500px;
 		margin: 1rem auto;
-		padding: 0.5rem 0; /* smaller vertical padding */
-		
-		/* --- Scrollbar Fix --- */
-		/* Flexbox helps create a reliable container */
+		padding: 0.5rem 0;
 		display: flex;
 		justify-content: center;
-		/* These two properties are key to preventing scrollbars */
 		position: relative;
-		overflow: hidden; 
+		overflow: hidden;
 	}
 
 	.awards-container {
 		width: 100%;
-		height: 200px; /* slightly reduced to tighten vertical rhythm */
+		height: 200px;
 		position: relative;
-		perspective: 1200px; /* Default perspective for large screens */
+		perspective: 1200px;
 	}
 
 	.carousel {
@@ -135,57 +110,73 @@
 		top: 10px;
 		width: var(--card-width);
 		height: 180px;
-		
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: 0.8rem;
 		border-radius: 12px;
 		box-sizing: border-box;
-		
 		background: rgba(30, 30, 45, 0.5);
 		border: 1px solid rgba(255, 255, 255, 0.15);
 		backdrop-filter: blur(10px);
-		
 		transition: transform 0.8s ease, opacity 0.8s ease;
-		
 		opacity: 0.5;
 		transform-origin: center center;
 	}
 
 	.carousel-item.active {
 		opacity: 1;
-		transform: scale(1.1); /* Active item is larger */
+		transform: scale(1.1);
 		border-color: rgba(255, 255, 255, 0.3);
 	}
 
-	.carousel-item .sf-root {
+	.achievement-card {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 0.4rem;
+		text-decoration: none;
+		color: #fff;
+		width: 100%;
+		height: 100%;
 	}
 
-	/* --- Responsive Adjustments --- */
-	@media (max-width: 992px) {
-		.awards-wrapper {
-			max-width: 400px;
-		}
-		.awards-container {
-			height: 190px;
-		}
+	.achievement-icon {
+		font-size: 2rem;
+		color: #e05c5c;
+		text-shadow: 0 0 12px rgba(224, 92, 92, 0.5);
 	}
-	
+
+	.achievement-label {
+		font-size: 0.95rem;
+		font-weight: 700;
+		text-align: center;
+		color: #fff;
+	}
+
+	.achievement-sub {
+		font-size: 0.72rem;
+		color: #aaa;
+		text-align: center;
+		line-height: 1.3;
+	}
+
+	@media (max-width: 992px) {
+		.awards-wrapper { max-width: 400px; }
+		.awards-container { height: 190px; }
+	}
+
 	@media (max-width: 600px) {
-		.awards-wrapper {
-			max-width: 320px;
-		}
+		.awards-wrapper { max-width: 320px; }
 		.awards-container {
-			height: 160px; /* reduce for small phones */
-			perspective: 800px; /* Reduce perspective depth on mobile */
+			height: 160px;
+			perspective: 800px;
 		}
 		.carousel-item {
 			height: 130px;
 			top: 12px;
 		}
+		.achievement-icon { font-size: 1.6rem; }
 	}
 </style>

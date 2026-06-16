@@ -129,7 +129,7 @@ class _ImportMediaFromPlatformsViewState
     );
   }
 
-  // ─── Import Bloomee JSON/BLM files ────────────────────────────────────────
+  // ─── Import NasBeat JSON/BLM files ────────────────────────────────────────
 
   void _importBloomeeFile(BuildContext context) {
     showDialog(

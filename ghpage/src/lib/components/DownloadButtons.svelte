@@ -1,207 +1,185 @@
 <script>
-        export let downloads = [
-                { platform: 'android', icon: 'fa-brands fa-android', name: 'Android',  },
-                { platform: 'windows', icon: 'fa-brands fa-windows', name: 'Windows', },
-                { platform: 'linux', icon: 'fa-brands fa-linux', name: 'Linux',}
-        ];
+	export let downloads = [
+		{ platform: 'android', icon: 'fa-brands fa-android', name: 'Android' },
+		{ platform: 'windows', icon: 'fa-brands fa-windows', name: 'Windows' },
+		{ platform: 'linux', icon: 'fa-brands fa-linux', name: 'Linux' }
+	];
 
-        const githubReleaseLink = "https://github.com/nastech-ai/NasBeat/releases";
-        const sourceforgeLink = "https://github.com/nastech-ai/NasBeat";
+	const releasesLink = "https://github.com/ncntech/NasBeat/releases";
+	const latestLink = "https://github.com/ncntech/NasBeat/releases/latest";
 
-        function openSourceForge() {
-                window.open(sourceforgeLink, '_blank');
-        }
+	function openReleases() {
+		window.open(releasesLink, '_blank');
+	}
 </script>
 
 <div class="download-section">
-        <!-- Top row of smaller download buttons -->
-        <div class="download-buttons">
-                {#each downloads as download}
-                        <a href={download.href} class="download-btn" onclick={(e) => { e.preventDefault(); openSourceForge(); }}>
-                                <i class={download.icon}></i> 
-                                <span>{download.name}</span>
-                        </a>
-                {/each}
-        </div>
+	<div class="download-buttons">
+		{#each downloads as download}
+			<a href={releasesLink} class="download-btn" onclick={(e) => { e.preventDefault(); openReleases(); }}>
+				<i class={download.icon}></i>
+				<span>{download.name}</span>
+			</a>
+		{/each}
+	</div>
 
-        <!-- Larger buttons for GitHub and SourceForge -->
-        <div class="custom-download-buttons">
-                <a href={githubReleaseLink} class="custom-btn" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-github"></i>
-                        <div class="button-info">
-                                <span>GitHub Releases</span>
-                                <small>Latest built releases</small>
-                        </div>
-                </a>
-                <a href="https://github.com/nastech-ai/NasBeat/releases/latest" class="custom-btn" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-solid fa-download" style="font-size:1.8rem;"></i>
-                        <div class="button-info">
-                                <span>Latest Release</span>
-                                <small>Direct download — GitHub</small>
-                        </div>
-                </a>
-        </div>
+	<div class="custom-download-buttons">
+		<a href={releasesLink} class="custom-btn" target="_blank" rel="noopener noreferrer">
+			<i class="fa-brands fa-github"></i>
+			<div class="button-info">
+				<span>GitHub Releases</span>
+				<small>All releases &amp; changelogs</small>
+			</div>
+		</a>
+		<a href={latestLink} class="custom-btn" target="_blank" rel="noopener noreferrer">
+			<i class="fa-solid fa-download" style="font-size:1.8rem;"></i>
+			<div class="button-info">
+				<span>Latest Release</span>
+				<small>Direct download — GitHub</small>
+			</div>
+		</a>
+	</div>
 </div>
 
 <style>
-        .download-section { 
-                /* reduce bottom margin so following section (About) sits closer on mobile */
-                margin-bottom: 1rem; 
-                /* Add horizontal padding to prevent elements from touching the screen edges */
-                padding: 0 1rem;
-        }
-        
-        .download-buttons { 
-                display: flex; 
-                gap: 1rem; 
-                justify-content: center; 
-                flex-wrap: wrap;
-        }
-        
-        .download-btn { 
-                padding: 0.8rem 1.2rem; 
-                background: rgba(255, 255, 255, 0.08); 
-                border: 2px solid rgba(255, 255, 255, 0.15); 
-                border-radius: 12px; 
-                backdrop-filter: blur(12px); 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                gap: 8px; 
-                transition: all .3s ease; 
-                /* Allow buttons to grow and shrink flexibly from a base size */
-                flex: 1 1 120px;
-                max-width: 150px; /* Prevent buttons from becoming too wide on larger screens */
-                text-decoration: none;
-                color: #ffffff;
-                font-weight: 500;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .download-btn:hover { 
-                background: rgba(255, 255, 255, 0.15);
-                border-color: rgba(255, 255, 255, 0.3); 
-                box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
-                transform: translateY(-2px) scale(1.02);
-        }
-        
-        .download-btn i { 
-                font-size: 1.3rem; 
-                color: #ffffff; 
-                text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-        }
-        
-        .download-btn span { 
-                font-size: 0.9rem; 
-                font-weight: 600; 
-                color: #ffffff; 
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-        }
+	.download-section {
+		margin-bottom: 1rem;
+		padding: 0 1rem;
+	}
 
-        .custom-download-buttons {
-                display: flex;
-                gap: 1.5rem;
-                justify-content: center;
-                margin-top: 2rem;
-                flex-wrap: wrap;
-                direction: row;
-        }
+	.download-buttons {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
 
-        /* A common, professional style for the custom GitHub and SourceForge buttons */
-        .custom-btn {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 1rem;
-                /* Use the same translucent panel styling as other sections to avoid a 'disabled' solid block look */
-                background: rgba(16, 11, 33, 0.15);
-                border: 1px solid rgba(255,255,255,0.06);
-                color: #fff;
-                padding: 0.8rem 1.2rem;
-                border-radius: 8px;
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-                text-decoration: none;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-                /* Flexible sizing for different screens */
-                flex: 1 1 280px;
-                max-width: 260px;
-                min-height: 56px; /* slightly smaller min height */
-                box-sizing: border-box; /* Ensures padding is included in the total width/height */
-        }
+	.download-btn {
+		padding: 0.8rem 1.2rem;
+		background: rgba(255, 255, 255, 0.08);
+		border: 2px solid rgba(255, 255, 255, 0.15);
+		border-radius: 12px;
+		backdrop-filter: blur(12px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		transition: all .3s ease;
+		flex: 1 1 120px;
+		max-width: 150px;
+		text-decoration: none;
+		color: #ffffff;
+		font-weight: 500;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
 
-        .custom-btn:hover {
-                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
-                transform: translateY(-4px);
-        }
+	.download-btn:hover {
+		background: rgba(255, 255, 255, 0.15);
+		border-color: rgba(255, 255, 255, 0.3);
+		box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+		transform: translateY(-2px) scale(1.02);
+	}
 
-        .custom-btn .fa-github {
-                font-size: 1.8rem;
-        }
+	.download-btn i {
+		font-size: 1.3rem;
+		color: #ffffff;
+		text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+	}
 
-        .sourceforge-icon {
-                width: 32px;
-                height: 32px;
-        }
+	.download-btn span {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: #ffffff;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+	}
 
-        /* Common class for the text content inside custom buttons */
-        .button-info {
-                display: flex;
-                flex-direction: column;
-                text-align: left;
-        }
+	.custom-download-buttons {
+		display: flex;
+		gap: 1.5rem;
+		justify-content: center;
+		margin-top: 2rem;
+		flex-wrap: wrap;
+		direction: row;
+	}
 
-        .button-info span {
-                font-size: 1rem;
-                font-weight: bold;
-        }
+	.custom-btn {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 1rem;
+		background: rgba(16, 11, 33, 0.15);
+		border: 1px solid rgba(255,255,255,0.06);
+		color: #fff;
+		padding: 0.8rem 1.2rem;
+		border-radius: 8px;
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+		text-decoration: none;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+		flex: 1 1 280px;
+		max-width: 260px;
+		min-height: 56px;
+		box-sizing: border-box;
+	}
 
-        .button-info small {
-                font-size: 0.8rem;
-                color: #aaa;
-        }
+	.custom-btn:hover {
+		box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+		transform: translateY(-4px);
+	}
 
-        /* --- Responsive Adjustments --- */
+	.custom-btn .fa-github {
+		font-size: 1.8rem;
+	}
 
-        /* For Tablets */
-        @media (max-width: 768px) {
-                .custom-btn {
-                        /* Adjust flexible basis for tablets */
-                        flex-basis: 260px;
-                }
-        }
-        
-        /* For Mobile Phones */
-        @media (max-width: 640px) {
-                .download-section {
-                        padding: 0 0.5rem; /* Reduce side padding on small screens */
-                }
+	.button-info {
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+	}
 
-                .download-buttons {
-                        gap: 0.5rem; /* Make the gap smaller */
-                }
-                
-                .download-btn {
-                        padding: 0.6rem 1rem;
-                        flex-basis: 100px; /* Adjust size for mobile */
-                }
-                
-                .download-btn i { font-size: 1.1rem; }
-                .download-btn span { font-size: 0.8rem; }
+	.button-info span {
+		font-size: 1rem;
+		font-weight: bold;
+	}
 
-                /* Stack the custom buttons vertically on mobile and reduce their top margin */
-                .custom-download-buttons {
-                        flex-direction: column;
-                        gap: 0.8rem;
-                        /* Ensure the container and its children stretch properly */
-                        align-items: stretch;
-                        margin-top: 1rem; /* reduce space above download buttons */
-                }
-                
-                .custom-btn {
-                        width: 100%;
-                        max-width: none;
-                        /* When stacked vertically, don't let buttons flex-grow and stretch the height */
-                        flex: 0 0 auto;
-                }
-        }
+	.button-info small {
+		font-size: 0.8rem;
+		color: #aaa;
+	}
+
+	@media (max-width: 768px) {
+		.custom-btn {
+			flex-basis: 260px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.download-section {
+			padding: 0 0.5rem;
+		}
+
+		.download-buttons {
+			gap: 0.5rem;
+		}
+
+		.download-btn {
+			padding: 0.6rem 1rem;
+			flex-basis: 100px;
+		}
+
+		.download-btn i { font-size: 1.1rem; }
+		.download-btn span { font-size: 0.8rem; }
+
+		.custom-download-buttons {
+			flex-direction: column;
+			gap: 0.8rem;
+			align-items: stretch;
+			margin-top: 1rem;
+		}
+
+		.custom-btn {
+			width: 100%;
+			max-width: none;
+			flex: 0 0 auto;
+		}
+	}
 </style>

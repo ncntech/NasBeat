@@ -71,7 +71,7 @@ class _EqualizerViewState extends State<EqualizerView>
   bool _isGraphInteractive = false;
 
   // FIX L-01: Reactive subscriptions so the view stays in sync with engine state
-  // changes from external code (settings restore, revive, Bloomee settings page).
+  // changes from external code (settings restore, revive, NasBeat settings page).
   StreamSubscription? _eqEnabledSub;
   StreamSubscription? _eqGainsSub;
 

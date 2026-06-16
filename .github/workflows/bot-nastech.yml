@@ -26,5 +26,5 @@ jobs:
             const botIssues = await github.rest.issues.listForRepo({owner:context.repo.owner,repo:context.repo.repo,labels:"nastech-bot",state:"open",per_page:20});
             const issueList = botIssues.data.map(i=>`- [${i.title}](${i.html_url})`).join("\n")||"- None 🎉";
             const title = `🌳 [NasTech Bot] Weekly Report — ${new Date().toISOString().slice(0,10)}`;
-            const body = `# NasBeat Weekly Health Dashboard\n\n**Build Health:** ${status} (${rate}% — ${passed} passed, ${failed} failed)\n\n## Open Bot Issues\n${issueList}\n\n## Links\n- [Actions](https://github.com/${context.repo.owner}/${context.repo.repo}/actions)\n- [Releases](https://github.com/${context.repo.owner}/${context.repo.repo}/releases)\n- [Upstream](https://github.com/HemantKArya/BloomeeTunes/commits/main)\n\n---\n*NasTech Master Bot*`;
+            const body = `# NasBeat Weekly Health Dashboard\n\n**Build Health:** ${status} (${rate}% — ${passed} passed, ${failed} failed)\n\n## Open Bot Issues\n${issueList}\n\n## Links\n- [Actions](https://github.com/${context.repo.owner}/${context.repo.repo}/actions)\n- [Releases](https://github.com/${context.repo.owner}/${context.repo.repo}/releases)\n\n---\n*NasTech Master Bot*`;
             await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title,body,labels:["nastech-bot","weekly-report"]});
