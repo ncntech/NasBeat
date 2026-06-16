@@ -120,21 +120,21 @@ class About extends StatelessWidget {
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     // Use Wrap so title + flower can wrap on narrow widths.
-                    child: const Wrap(
+                    child: Wrap(
                       alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       spacing: 6,
                       children: [
                         Text(
-                          'BloomeeTunes',
+                          'NasBeat',
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Gilroy',
                           ),
                         ),
-                        // Small animated flower
-                        GentleRotatingFlower(size: 28),
+                        // NasTech tree logo
+                        Image.asset('assets/icons/nastech_tree.png', width: 32, height: 32),
                       ],
                     ),
                   ),
@@ -177,7 +177,7 @@ class About extends StatelessWidget {
                     const SizedBox(width: 12),
                     Flexible(
                       child: Text(
-                        '@iamhemantindia',
+                        '@nastech_ai',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: kPrimaryTextColor,
@@ -213,28 +213,28 @@ class About extends StatelessWidget {
                       text: 'Maintainer',
                       tooltip: l10n.aboutFollowGitHub,
                       onTap: () {
-                        launchUrl(Uri.parse('https://github.com/HemantKArya'),
+                        launchUrl(Uri.parse('https://github.com/nastech-ai'),
                             mode: LaunchMode.externalApplication);
                       }),
                   // Short label 'Email' opens mail composer
                   _InfoPill(
-                      icon: FontAwesome.x_twitter_brand,
-                      text: 'Contact',
+                      icon: MingCute.github_fill,
+                      text: 'Source Code',
                       tooltip: l10n.aboutSendInquiry,
                       onTap: () {
                         launchUrl(
-                          Uri.parse('https://x.com/iamhemantindia'),
+                          Uri.parse('https://github.com/nastech-ai/NasBeat'),
                           mode: LaunchMode.externalApplication,
                         );
                       }),
                   // Short label 'Linkedin' opens Linkedin profile
                   _InfoPill(
-                      icon: FontAwesome.linkedin_brand,
-                      text: 'Linkedin',
+                      icon: MingCute.download_3_fill,
+                      text: 'Releases',
                       tooltip: l10n.aboutCreativeHighlights,
                       onTap: () {
                         launchUrl(
-                            Uri.parse('https://linkedin.com/in/iamhemantindia'),
+                            Uri.parse('https://github.com/nastech-ai/NasBeat/releases'),
                             mode: LaunchMode.externalApplication);
                       }),
                 ],
@@ -280,7 +280,7 @@ class About extends StatelessWidget {
               borderRadius: BorderRadius.circular(32.0),
               onTap: () {
                 launchUrl(
-                  Uri.parse("https://hemantkarya.github.io/BloomeeTunes/"),
+                  Uri.parse("https://github.com/nastech-ai/NasBeat/releases"),
                   mode: LaunchMode.externalApplication,
                 );
               },
@@ -337,7 +337,7 @@ class About extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               onTap: () {
                 launchUrl(
-                    Uri.parse("https://hemantkarya.github.io/BloomeeTunes/"),
+                    Uri.parse("https://github.com/nastech-ai/NasBeat"),
                     mode: LaunchMode.externalApplication);
               },
               child: Row(
