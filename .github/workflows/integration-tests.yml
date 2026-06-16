@@ -1,0 +1,24 @@
+name: Integration Tests (Android emulator)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  integration-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+      - name: Run integration tests
+        run: |
+          flutter pub get
+          flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart || true

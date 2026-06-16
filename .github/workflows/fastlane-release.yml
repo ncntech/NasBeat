@@ -1,0 +1,21 @@
+name: Fastlane Release (stub)
+
+on:
+  workflow_dispatch:
+  push:
+    tags: [ 'v*.*.*' ]
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Install fastlane
+        run: gem install fastlane -v ">=2.0"
+      - name: Prepare
+        run: echo "Fastlane release steps are configured but will only run when secrets are provided."
+      - name: Build Android (example)
+        run: echo "Skipping actual publish — requires secrets."

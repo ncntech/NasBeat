@@ -1,0 +1,12 @@
+name: SmartBot index
+
+on:
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print SmartBot status
+        run: |
+          echo "SmartBot branch is active. See .github/SMARTBOT_README.md for details."

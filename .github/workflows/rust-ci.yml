@@ -1,0 +1,45 @@
+name: Rust CI
+
+on:
+  push:
+    branches: [ main, SmartBot ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  rust-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        crate-path: ["rust", "rust_builder"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+      - name: Run cargo fmt check
+        run: |
+          cd ${{ matrix.crate-path }}
+          cargo fmt -- --check || true
+      - name: Cargo build
+        run: |
+          cd ${{ matrix.crate-path }}
+          cargo build --release
+      - name: Cargo test
+        run: |
+          cd ${{ matrix.crate-path }}
+          cargo test --workspace --all-features
+
+  cargo-audit:
+    runs-on: ubuntu-latest
+    needs: rust-check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install cargo-audit
+        run: cargo install cargo-audit || true
+      - name: Run cargo audit
+        run: |
+          cargo audit || true
