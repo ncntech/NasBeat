@@ -1,3 +1,4 @@
+import 'package:Bloomee/blocs/mini_player/mini_player_cubit.dart';
 import 'package:Bloomee/blocs/player_overlay/player_overlay_cubit.dart';
 import 'package:Bloomee/screens/widgets/player_overlay_wrapper.dart';
 import 'package:Bloomee/screens/widgets/mini_player_widget.dart';
@@ -192,11 +193,27 @@ class _AnimatedPageViewState extends State<_AnimatedPageView>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: widget.navigationShell,
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification is ScrollUpdateNotification) {
+          final delta = notification.scrollDelta ?? 0;
+          final miniCubit = context.read<MiniPlayerCubit>();
+          if (delta > 8) {
+            // user scrolled down (content moves up) — hide bar for browsing room
+            miniCubit.hideForScroll();
+          } else if (delta < -8) {
+            // user scrolled up — reveal the bar
+            miniCubit.revealAfterScroll();
+          }
+        }
+        return false;
+      },
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: widget.navigationShell,
+        ),
       ),
     );
   }
