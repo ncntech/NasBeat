@@ -32,7 +32,7 @@
         aria-controls={`section-${i}`}
         aria-label={labels[i] ?? `Section ${i + 1}`}
         title={labels[i] ?? `Section ${i + 1}`}
-        on:click={() => setActive(i)}
+        onclick={() => setActive(i)}
       >
         <span class="dot-label">{labels[i] ?? i + 1}</span>
       </button>

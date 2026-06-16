@@ -1,13 +1,14 @@
 <script>
-	import '../app.css';
-	
-	let { children } = $props();
+        import '../app.css';
+        import { base } from '$app/paths';
+
+        let { children } = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/nasbeat-logo-red.png" type="image/png" />
+        <link rel="icon" href="{base}/nasbeat-logo-red.png" type="image/png" />
 </svelte:head>
 
 <main>
-	{@render children?.()}
+        {@render children?.()}
 </main>
