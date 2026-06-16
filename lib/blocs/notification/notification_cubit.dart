@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:Bloomee/core/models/app_notification.dart';
-import 'package:Bloomee/services/bloomee_updater_tools.dart';
-import 'package:Bloomee/services/db/dao/notification_dao.dart';
+import 'package:nasbeat/core/models/app_notification.dart';
+import 'package:nasbeat/services/bloomee_updater_tools.dart';
+import 'package:nasbeat/services/db/dao/notification_dao.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
