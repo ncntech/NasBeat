@@ -1,0 +1,39 @@
+name: "📦 NasTech Dependency Bot"
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+permissions:
+  issues: write
+  contents: read
+jobs:
+  deps-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Flutter pub outdated
+        run: |
+          flutter pub get --no-example 2>&1 | tail -5
+          flutter pub outdated --no-color 2>&1 | tee /tmp/flutter_outdated.txt || true
+      - name: Rust cargo outdated
+        run: |
+          cd rust_builder && cargo update --dry-run 2>&1 | tee /tmp/rust_outdated.txt || true
+      - name: Create/update issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const flutter = fs.existsSync("/tmp/flutter_outdated.txt") ? fs.readFileSync("/tmp/flutter_outdated.txt","utf8").slice(0,3000) : "No output";
+            const rust = fs.existsSync("/tmp/rust_outdated.txt") ? fs.readFileSync("/tmp/rust_outdated.txt","utf8").slice(0,2000) : "No output";
+            const title = "📦 [NasTech Bot] Dependency Health Report";
+            const body = `## NasBeat Dependency Health\n\n**Date:** ${new Date().toISOString().slice(0,10)}\n\n### Flutter Packages\n\`\`\`\n${flutter}\n\`\`\`\n\n### Rust Crates\n\`\`\`\n${rust}\n\`\`\`\n\n---\n*NasTech Dependency Bot*`;
+            const issues = await github.rest.issues.listForRepo({owner: context.repo.owner, repo: context.repo.repo, labels: "nastech-bot,dependencies", state: "open"});
+            if (issues.data.length > 0) {
+              await github.rest.issues.createComment({owner: context.repo.owner, repo: context.repo.repo, issue_number: issues.data[0].number, body});
+            } else {
+              await github.rest.issues.create({owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ["nastech-bot","dependencies"]});
+            }
