@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:Bloomee/blocs/media_player/bloomee_player_cubit.dart';
-import 'package:Bloomee/blocs/settings_cubit/cubit/settings_cubit.dart';
-import 'package:Bloomee/core/constants/setting_keys.dart';
-import 'package:Bloomee/core/theme/app_theme.dart';
-import 'package:Bloomee/l10n/app_localizations.dart';
-import 'package:Bloomee/screens/screen/home_views/setting_views/custom_switch.dart';
-import 'package:Bloomee/services/player/player_engine.dart';
+import 'package:nasbeat/blocs/media_player/bloomee_player_cubit.dart';
+import 'package:nasbeat/blocs/settings_cubit/cubit/settings_cubit.dart';
+import 'package:nasbeat/core/constants/setting_keys.dart';
+import 'package:nasbeat/core/theme/app_theme.dart';
+import 'package:nasbeat/l10n/app_localizations.dart';
+import 'package:nasbeat/screens/screen/home_views/setting_views/custom_switch.dart';
+import 'package:nasbeat/services/player/player_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
