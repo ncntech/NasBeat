@@ -329,8 +329,27 @@ class About extends StatelessWidget {
   Widget _buildFooter(AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Center(
-        child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.favorite, color: Color(0xFFF17C98), size: 13),
+              const SizedBox(width: 6),
+              const Text(
+                'Made with love by Nsamba Naswif',
+                style: TextStyle(
+                  color: Color(0xFFC3B9CF),
+                  fontSize: 12,
+                  fontFamily: 'Gilroy',
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
